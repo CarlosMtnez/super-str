@@ -1,0 +1,24 @@
+{
+    "name": "konexia/super-str",
+    "description": "A helper library for string manipulation with chaining capabilities.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Konexia\\SuperStr\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9"
+    },
+    "authors": [
+        {
+            "name": "CarlosMtnez",
+            "email": "carlos@mtnez.net"
+        }
+    ],
+    "require": {}
+}
