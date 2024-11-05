@@ -25,7 +25,7 @@ if (!function_exists('sstr')) {
      *
      * @return mixed|Konexia\SuperStr\SuperStr
      */
-    function super_str($value = '')
+    function sstr($value = '')
     {
         return new SuperStr($value);
     }

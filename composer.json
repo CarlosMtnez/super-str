@@ -20,5 +20,8 @@
             "email": "carlos@mtnez.net"
         }
     ],
+    "scripts": {
+        "test": "vendor\\bin\\phpunit"
+    },
     "require": {}
 }
