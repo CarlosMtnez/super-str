@@ -1,25 +1,25 @@
 <?php
-/* Static Proxy for SuperStrCore */
+/* Static Proxy for SuperStr */
 
 namespace Konexia\SuperStr;
 
-class SuperStr
+class Sstr
 {
     public static function __callStatic($name, $arguments)
     {
-        $instance = new SuperStrCore($arguments[0]);
+        $instance = new SuperStr($arguments[0]);
         return $instance->$name(...array_slice($arguments, 1));
     }
 
     /**
-     * Get an instance of SuperStrCore
+     * Get an instance of SuperStr
      *
      * @param string $value The initial value for the string
      *
-     * @return SuperStrCore
+     * @return SuperStr
      */
-    public static function getInstance(string $value): SuperStrCore
+    public static function getInstance(string $value): SuperStr
     {
-        return new SuperStrCore($value);
+        return new SuperStr($value);
     }
 }

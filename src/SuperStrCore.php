@@ -2,7 +2,7 @@
 
 namespace Konexia\SuperStr;
 
-class SuperStrCore
+class SuperStr
 {
     protected string $value;
     protected bool $skipChaining = false;
