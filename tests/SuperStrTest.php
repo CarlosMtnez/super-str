@@ -159,6 +159,94 @@ class SuperStrTest extends TestCase
         $this->assertEquals('hello-beau', $result);
     }
 
+    public function testTruncate()
+    {
+        $str = new SuperStr('Hello, how are you today?');
+        
+        // Case where truncation happens without splitting words
+        $result = $str->truncate(10)->get();
+        $this->assertEquals('Hello, how…', $result);
+    
+        // Case where truncation happens exactly at a word
+        $str = new SuperStr('Hello, how are you today?');
+        $result = $str->truncate(15)->get();
+        $this->assertEquals('Hello, how are…', $result);
+    
+        // Case where no truncation is needed
+        $str = new SuperStr('Hello, how are you today?');
+        $result = $str->truncate(30)->get();
+        $this->assertEquals('Hello, how are you today?', $result);
+    
+        // Case with custom append string
+        $str = new SuperStr('Hello, how are you today?');
+        $result = $str->truncate(12, '~')->get();
+        $this->assertEquals('Hello, how~', $result);
+
+        // Case with cut word (but not first word)
+        $str = new SuperStr('Hello, how are you today?');
+        $result = $str->truncate(21)->get();
+        $this->assertEquals('Hello, how are you…', $result);
+    
+        // Case with truncation at the first word (not whole word)
+        $str = new SuperStr('Hello, how are you today?');
+        $result = $str->truncate(5)->get();
+        $this->assertEquals('Hello…', $result);
+    
+        // Case where truncation removes all but one word
+        $str = new SuperStr('Hello, how are you today?');
+        $result = $str->truncate(7)->get();
+        $this->assertEquals('Hello,…', $result);
+    
+        // Case with a very short max length that doesn't reach a complete word
+        $str = new SuperStr('Hello, how are you today?');
+        $result = $str->truncate(3)->get();
+        $this->assertEquals('Hel…', $result);
+    
+        // Case with max length equal to the length of the first word
+        $str = new SuperStr('Hello, how are you today?');
+        $result = $str->truncate(6)->get();
+        $this->assertEquals('Hello,…', $result);
+    }
+    
+
+
+    public function testFirstUpper()
+    {
+        $str = new SuperStr('hello world');
+        $result = $str->firstUpper()->get();
+        $this->assertEquals('Hello world', $result);
+    }
+
+    public function testFirstLower()
+    {
+        $str = new SuperStr('Hello World');
+        $result = $str->firstLower()->get();
+        $this->assertEquals('hello World', $result);
+    }
+
+    public function testSubstring()
+    {
+        $str = new SuperStr('Example String');
+        $result = $str->substring(0, 7)->get();
+        $this->assertEquals('Example', $result);
+    
+        $str = new SuperStr('Example String');
+        $result = $str->substring(8)->get();
+        $this->assertEquals('String', $result);
+    
+        $str = new SuperStr('Example String');
+        $result = $str->substring(-4)->get();
+        $this->assertEquals('ring', $result);
+    }
+    
+    public function testReverse()
+    {
+        $str = new SuperStr('Example');
+        $result = $str->reverse()->get();
+        $this->assertEquals('elpmaxE', $result);
+    }
+    
+
 }
 
 ?>

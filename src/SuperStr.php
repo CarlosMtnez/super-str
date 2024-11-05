@@ -85,25 +85,101 @@ class SuperStr
         $this->value = ucfirst(strtolower($this->value));
         return $this; 
     }
-
+        
     /**
-     * Set the processed string.
+     * Convert the first character of the current string value to uppercase.
      *
-     * @return this
+     * @return $this
      */
-    public function set(): self
+    public function firstUpper(): self
     {
+        if ($this->skipChaining) {
+            return $this;
+        }
+
+        $this->value = mb_strtoupper(mb_substr($this->value, 0, 1)) . mb_substr($this->value, 1);
         return $this;
     }
-    
+
     /**
-     * Get the processed string.
+     * Convert the first character of the current string value to lowercase.
      *
-     * @return string
+     * @return $this
      */
-    public function get(): string
+    public function firstLower(): self
     {
-        return $this->value;
+        if ($this->skipChaining) {
+            return $this;
+        }
+
+        $this->value = mb_strtolower(mb_substr($this->value, 0, 1)) . mb_substr($this->value, 1);
+        return $this;
+    }
+
+    /**
+     * Reverse the current string value.
+     *
+     * @return $this
+     */
+    public function reverse(): self
+    {
+        if ($this->skipChaining) {
+            return $this;
+        }
+
+        $this->value = implode('', array_reverse(mb_str_split($this->value)));
+        return $this;
+    }
+
+    /**
+     * Truncate the current string value to a given length without splitting words.
+     *
+     * @param int    $maxLen The maximum length of the truncated string
+     * @param string $append The string to append if truncation occurs (default: '…')
+     *
+     * @return $this
+     */
+    public function truncate(int $maxLen, string $append = '…'): self
+    {
+        if ($this->skipChaining) {
+            return $this;
+        }
+
+        if (mb_strlen($this->value) <= $maxLen) {
+            return $this; // No truncation needed
+        }
+
+        $truncated = mb_substr($this->value, 0, $maxLen);
+
+        // do not cut a word in half!
+        if (mb_substr($this->value, $maxLen, 1) !== ' ' && mb_strrpos($truncated, ' ') !== false) {
+            $lastSpace = mb_strrpos($truncated, ' ');
+            $truncated = mb_substr($truncated, 0, $lastSpace);
+        }
+
+        $this->value = rtrim($truncated) . $append;
+
+        return $this;
+    }
+
+
+
+    /**
+     * Get a substring of the current string value.
+     *
+     * @param int      $start  The starting position of the substring
+     * @param int|null $length The length of the substring (optional)
+     *
+     * @return $this
+     */
+    public function substring(int $start, ?int $length = null): self
+    {
+        if ($this->skipChaining) {
+            return $this;
+        }
+
+        $this->value = mb_substr($this->value, $start, $length);
+        return $this;
     }
 
     /**
@@ -226,7 +302,6 @@ class SuperStr
         return $this;
     }
 
-
     /**
      * Trim whitespace from both ends of the current value.
      *
@@ -327,6 +402,25 @@ class SuperStr
     }
 
 
+    /**
+     * Set the processed string.
+     *
+     * @return this
+     */
+    public function set(): self
+    {
+        return $this;
+    }
+    
+    /**
+     * Get the processed string.
+     *
+     * @return string
+     */
+    public function get(): string
+    {
+        return $this->value;
+    }
 
 }
 
