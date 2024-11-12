@@ -24,7 +24,7 @@ composer require konexia/super-str
 SuperStr can be used in three different ways:
 
 1. **Using the Helper Function**: `super_str(string $value)`
-2. **Using the Static Class**: `SuperStr::set(string $value)`
+2. **Using the Static Class**: `Sstr::set(string $value)`
 3. **Using an Instance of SuperStr**: `SuperStr->getInstance(?string $value)`
 
 ### Examples of Usages
@@ -35,7 +35,7 @@ echo super_str('hello')->toUpper()->append(' WORLD')->get();
 // Outputs: HELLO WORLD
 
 //2.Static Class
-echo SuperStr::set('hello')->toUpper()->append(' WORLD')->get();
+echo Sstr::set('hello')->toUpper()->append(' WORLD')->get();
 // Outputs: HELLO WORLD
 
 //3.Instance
